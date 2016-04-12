@@ -2152,7 +2152,7 @@ public class GitSCMTest extends AbstractGitTestCase {
     @TestExtension
     public static class CleanEnvironment extends EnvironmentContributor {
         @Override
-        public void buildEnvironmentFor(Job j, EnvVars envs, TaskListener listener) {
+        public void buildEnvironmentFor(Run run, EnvVars envs, TaskListener listener) {
             envs.remove(GitSCM.GIT_BRANCH);
             envs.remove(GitSCM.GIT_LOCAL_BRANCH);
             envs.remove(GitSCM.GIT_COMMIT);
