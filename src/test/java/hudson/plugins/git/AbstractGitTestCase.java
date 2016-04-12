@@ -309,6 +309,7 @@ public abstract class AbstractGitTestCase {
             envs.remove(GitSCM.GIT_COMMIT);
             envs.remove(GitSCM.GIT_PREVIOUS_COMMIT);
             envs.remove(GitSCM.GIT_PREVIOUS_SUCCESSFUL_COMMIT);
+            System.out.println("Cleaned!!");
         }
     }
 
