@@ -5,7 +5,9 @@ import hudson.FilePath;
 import hudson.Launcher;
 import hudson.matrix.MatrixBuild;
 import hudson.matrix.MatrixProject;
+import hudson.model.EnvironmentContributor;
 import hudson.model.FreeStyleBuild;
+import hudson.model.Job;
 import hudson.model.Result;
 import hudson.model.TaskListener;
 import hudson.model.AbstractBuild;
@@ -43,6 +45,7 @@ import org.junit.Rule;
 import org.junit.rules.TemporaryFolder;
 import org.jvnet.hudson.test.CaptureEnvironmentBuilder;
 import org.jvnet.hudson.test.JenkinsRule;
+import org.jvnet.hudson.test.TestExtension;
 
 import static org.junit.Assert.assertTrue;
 
@@ -295,4 +298,18 @@ public abstract class AbstractGitTestCase {
         System.out.println(out.toString());
         out.close();
     }
+
+    /** We clean the environment, just in case the test is being run from a Jenkins job using the this plugin :). */
+    @TestExtension
+    public static class CleanEnvironment extends EnvironmentContributor {
+        @Override
+        public void buildEnvironmentFor(Job j, EnvVars envs, TaskListener listener) {
+            envs.remove(GitSCM.GIT_BRANCH);
+            envs.remove(GitSCM.GIT_LOCAL_BRANCH);
+            envs.remove(GitSCM.GIT_COMMIT);
+            envs.remove(GitSCM.GIT_PREVIOUS_COMMIT);
+            envs.remove(GitSCM.GIT_PREVIOUS_SUCCESSFUL_COMMIT);
+        }
+    }
+
 }
