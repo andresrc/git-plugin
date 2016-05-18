@@ -41,6 +41,7 @@ import hudson.util.StreamTaskListener;
 
 import java.io.ByteArrayOutputStream;
 
+import jenkins.security.MasterToSlaveCallable;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.eclipse.jgit.lib.Constants;
@@ -769,7 +770,7 @@ public class GitSCMTest extends AbstractGitTestCase {
         assertEquals(p.toString(), s.getChannel().call(new BuildChooserContextTestCallable(c)));
     }
 
-    private static class BuildChooserContextTestCallable implements Callable<String,IOException> {
+    private static class BuildChooserContextTestCallable extends MasterToSlaveCallable<String,IOException> {
         private final BuildChooserContext c;
 
         public BuildChooserContextTestCallable(BuildChooserContext c) {
